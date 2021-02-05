@@ -1,5 +1,39 @@
 <html>
+    <head>
+        <title>JSON2Tabbed</title>
+        <style>
+            textarea {
+                width: 100%;
+                min-height: 5cm;
+            }
+        </style>
+        <script>
+            function refresh() {
+                const json = document.getElementById("json");
+                const tabbed = document.getElementById("tabbed");
+                const data = JSON.parse(json.value);
+                let output = [];
+                for (let row in data) {
+                    let item = data[row];
+                    let values = (typeof item == "object") ? Object.values(item) : [ item ];
+                    values.unshift(row);
+                    output.push(values.join("\t"));
+                }
+                tabbed.value = output.join("\n");
+            }
+        </script>>
+    </head>
     <body>
-        <h1>Israel Kehat's Public Tools</h1>
+        <h1>JSON to Tabbed</h1>
+        <p>
+            Convert JSON data to tabbed data you can import to Excel, Google Sheets, etc.
+        </p>
+        <p>
+            <textarea id="json" oninput="refresh()"></textarea>
+        </p>
+        <hr />
+        <p>
+            <textarea id="tabbed" readonly></textarea>
+        </p>
     </body>
 </html>
